@@ -1,6 +1,6 @@
 <?php
 // 管理者検索結果画面
-echo("該当者特定画面に飛びました。");
+// echo("該当者特定画面に飛びました。");
 
 //SESSIONスタート
 //session_start();
@@ -10,6 +10,12 @@ require_once('funcs.php');
 
 //ログインチェック
 //loginCheck();
+
+//0. POSTデータ取得
+$view = $_POST['view'];
+$where = $_POST['where'];
+
+echo $where;
 
 //以下ログインユーザーのみ
 

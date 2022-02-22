@@ -55,7 +55,7 @@ $view .= '</tr>';
     <fieldset>
     <legend>◆行動履歴の検索◆</legend><br>
      <label>日付<input type="date" name="date" maxlength="4" size="4"></label><br>
-     <label>社員番号：<input type="" name="empno"></label><br>
+     <label>社員番号：<input type="text" name="empno"></label><br>
      <!-- <label>郵便番号：<input type="text" name="postcode" maxlength="7" size="7"></label><br>
      <label>住所：<input type="text" name="address" maxlength="40" size="40"></label><br>
      <br> -->
