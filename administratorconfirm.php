@@ -19,14 +19,14 @@ $view .= '<TABLE border="1" width="1000" style="font-size: 10pt">';
 //タイトル表示
 $view .= '<tr bgcolor="#FFDBC9">';
 $view .= '<th width="50">No.</th>';
-$view .= '<th width="150">出勤日</th>';
-$view .= '<th width="100">出勤時間</th>';
-$view .= '<th width="600">退勤時間</th>';
-$view .= '<th width="600">社員番号</th>';
-$view .= '<th width="600">社員名</th>';
-$view .= '<th width="600">所属</th>';
-$view .= '<th width="600">出社先</th>';
-$view .= '<th width="600">備考</th>';
+$view .= '<th width="200">出勤日</th>';
+$view .= '<th width="200">出勤時間</th>';
+$view .= '<th width="200">退勤時間</th>';
+$view .= '<th width="200">社員番号</th>';
+$view .= '<th width="250">社員名</th>';
+$view .= '<th width="300">所属</th>';
+$view .= '<th width="250">出社先</th>';
+$view .= '<th width="400">備考</th>';
 $view .= '</tr>';
 
 ?>

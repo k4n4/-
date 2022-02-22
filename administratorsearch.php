@@ -25,7 +25,7 @@ $workdate = array();
 $starttime = array();
 $endtime = array();
 $place = array();
-$where = '';
+$where = 'WHERE ';
 
 //以下検索機能
 //1.DB接続
@@ -90,6 +90,8 @@ if($status==false) {
   }
     $view .= '</TABLE>';
     $view .= '</p>';
+
+    // WHERE句を作成
     $j = 0;
     for($i = 0 ; $i < count($starttime); $i++){
      $where .= '(transaction.workdate = "'.$workdate[$i]. '" and ';
@@ -101,6 +103,7 @@ if($status==false) {
      }
      $j = $j +1;
     }
+    
 
     // var_dump($workdate);
     // var_dump($starttime);
@@ -147,13 +150,11 @@ if($status==false) {
     
 </div>
 
-<form method="POST" action="administratoridentification.php"> 
-    <!-- 検索結果を隠して特定ページへ -->
-    <input type="hidden" name="view" value= "<?php echo $view; ?>" >
-    <input type="hidden" name="where" value= "<?php echo $where; ?>" >
-    <input type="submit" value="接触者を特定">
-</form>
-
+<legend>◆接触者を表示します◆</legend>
+<div>
+    <?= $view2 ?>
+    
+</div>
 <!-- Main[End] -->
 
 </body>
