@@ -27,14 +27,6 @@ $starttime = array();
 $endtime = array();
 $place = array();
 
-// 入力チェックはadministratorconfirm.phpで行う(required)
-
-// if($empno == 0) {
-//   $alert = "<script type='text/javascript'>alert('日付と社員番号は両方入力してください');</script>";
-//   echo $alert;
-//   exit();
-// }
-
 //以下検索機能
 //1.DB接続
 $pdo = db_conn();
@@ -114,12 +106,6 @@ if($status==false) {
     }
     $where .= ')';
 
-    // var_dump($workdate);
-    // var_dump($starttime);
-    // var_dump($endtime);
-    // var_dump($place);
-    // echo $where;
-
     // 接触者検索のSQL作成
     $stmt = $pdo->prepare("SELECT transaction.recordID,transaction.workdate,transaction.starttime,transaction.endtime,transaction.empno,employee_mst.empname,department_mst.departmentname,workplace_mst.workplacename,transaction.remarks
     FROM
@@ -170,7 +156,7 @@ if($status==false) {
         }
       }
         $view2 .= '</TABLE>';
-        $view2 .= '</p>';
+        $view2 .= '</p>';    
 ?>
 
 
@@ -216,7 +202,19 @@ if($status==false) {
 
 <!-- エクセル出力のボタン -->
 <form method="POST" action="fileexport.php">
-  <!-- <input type="hidden" name="view" value="<?=$view ?>"> -->
+  <!-- <input type="hidden" name="date" value="<?=$date ?>">
+  <input type="hidden" name="empno" value="<?=$empno ?>"> -->
+
+  <!-- 配列を次ページへ受け渡す -->
+  <?php 
+   for($i=0; $i < count($starttime); $i++) {
+      echo "<input type='hidden' name='starttime[]' value=" . $starttime[$i] . ">";
+      echo "<input type='hidden' name='endtime[]' value=" . $endtime[$i] . ">";
+      echo "<input type='hidden' name='place[]' value=" . $place[$i] . ">";
+      echo "<input type='hidden' name='workdate[]' value=" . $workdate[$i] . ">";
+   }
+  ?>
+  <input type="hidden" name='empno' value='<?= $empno; ?>'>
   <input type="submit" value="接触者をファイルに出力する">
 </form>
 
