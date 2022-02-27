@@ -26,6 +26,7 @@ $workdate = array();
 $starttime = array();
 $endtime = array();
 $place = array();
+$data = array();    
 
 //以下検索機能
 //1.DB接続
@@ -106,6 +107,9 @@ if($status==false) {
     }
     $where .= ')';
 
+    // デバッグ
+    echo $where;
+
     // 接触者検索のSQL作成
     $stmt = $pdo->prepare("SELECT transaction.recordID,transaction.workdate,transaction.starttime,transaction.endtime,transaction.empno,employee_mst.empname,department_mst.departmentname,workplace_mst.workplacename,transaction.remarks
     FROM
@@ -153,10 +157,40 @@ if($status==false) {
           $view2 .= '<th>'.$r["workplacename"].'</th>';
           $view2 .= '<th>'.$r["remarks"].'</th>';
           $view2 .= '</tr>';
+          $data[] = array(
+           $r["recordID"],
+           $r["workdate"],
+           $r["starttime"],
+           $r["endtime"],
+           $r["empno"],
+           $r["empname"],
+           $r["departmentname"],
+           $r["workplacename"],
+           $r["remarks"]  
+          );     
         }
       }
         $view2 .= '</TABLE>';
-        $view2 .= '</p>';    
+        $view2 .= '</p>';
+ 
+    
+// while( $r = $stmt->fetch(PDO::FETCH_ASSOC)){ 
+//   $data[] = 
+//   array(
+//     "No" => $r["recordID"],
+//     "出勤日" => $r["workdate"],
+//     "出勤時間" => $r["starttime"],
+//     "退勤時間" => $r["endtime"],
+//     "社員番号" => $r["empno"],
+//     "社員名" => $r["empname"],
+//     "所属" => $r["departmentname"],
+//     "出社先" => $r["workplacename"],
+//     "備考" => $r["remarks"]  
+//   );     
+// } 
+
+// var_dump($data);
+
 ?>
 
 
@@ -202,19 +236,25 @@ if($status==false) {
 
 <!-- エクセル出力のボタン -->
 <form method="POST" action="fileexport.php">
-  <!-- <input type="hidden" name="date" value="<?=$date ?>">
-  <input type="hidden" name="empno" value="<?=$empno ?>"> -->
 
   <!-- 配列を次ページへ受け渡す -->
   <?php 
-   for($i=0; $i < count($starttime); $i++) {
-      echo "<input type='hidden' name='starttime[]' value=" . $starttime[$i] . ">";
-      echo "<input type='hidden' name='endtime[]' value=" . $endtime[$i] . ">";
-      echo "<input type='hidden' name='place[]' value=" . $place[$i] . ">";
-      echo "<input type='hidden' name='workdate[]' value=" . $workdate[$i] . ">";
-   }
+  $count = 0;
+  $row = 0;
+  
+  for($i = 0 ; $i < count($data) ; $i++){  
+    
+    //for文の二重ループ   
+    for($j = 0; $j < 9; $j++){ //count($row)は列数となる。つまり、4となる。
+      //$i行目の$j列目を表示
+      echo "<input type='hidden' name='data[".$i."][".$j."]'". " value=" . $data[$i][$j] . ">";  
+    }  
+  }
+  echo "<input type='hidden' name='count' value=" . count($data) . ">";  
+  // echo "<input type='hidden' name='row' value=" . $row . ">"; 
+  // echo($row);
   ?>
-  <input type="hidden" name='empno' value='<?= $empno; ?>'>
+
   <input type="submit" value="接触者をファイルに出力する">
 </form>
 
